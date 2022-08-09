@@ -2,14 +2,29 @@ import styles from './styles.module.css';
 
 const {input, formContainer, container} = styles;
 
-const Home = () => {
+const Home = ({ username, setUsername, room, setRoom, socket }) => {
+
+  const joinRoom = () => {
+    if (room !== '' && username !== '') {
+      socket.emit('join_room', { username, room });
+    }
+  };
+
   return (
     <div className={container}>
       <div className={formContainer}>
         <h1>{`<>DevRooms</>`}</h1>
-        <input className={input} placeholder='Username...'></input>
+        <input 
+          className={input} 
+          placeholder='Username...'
+          onChange={(e) => setUsername(e.target.value)}
+        >
+        </input>
 
-        <select className={input}>
+        <select 
+          className={input}
+          onChange={(e) => setRoom(e.target.value)}
+        >
           <option>-- Select Room --</option>
           <option value='javascript'>JavaScript</option>
           <option value='node'>Node</option>
@@ -17,7 +32,13 @@ const Home = () => {
           <option value='react'>React</option>
         </select>
 
-        <button className='btn btn-secondary' style={{ width: '100%' }}>Join Room</button>
+        <button 
+          className='btn btn-secondary' 
+          style={{ width: '100%' }}
+          onClick={joinRoom}
+        >
+          Join Room
+        </button>
       </div>
     </div>
   );
