@@ -1,13 +1,19 @@
 import styles from './styles.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const {input, formContainer, container} = styles;
 
 const Home = ({ username, setUsername, room, setRoom, socket }) => {
 
+  const navigate = useNavigate();
+
   const joinRoom = () => {
     if (room !== '' && username !== '') {
       socket.emit('join_room', { username, room });
     }
+
+    // Redirect to /chat
+    navigate('/chat', { replace: true });
   };
 
   return (
