@@ -24,6 +24,14 @@ io.on('connection', (socket) => {
   socket.on('join_room', (data) => {
     const { username, room } = data; // Data setn from client when join_room event emitted
     socket.join(room); // Join the user to a socket room
+
+    let __createedtime__ = Date.now(); // Current timestamp
+    // Send message to all users currently in the room, apart form the user that just joined
+    socket.to(room).emit('receive_message', {
+      message: `${username} has joined the chat room`,
+      username: CHAT_BOT,
+      __createedtime__,
+    });
   });
 });
 
