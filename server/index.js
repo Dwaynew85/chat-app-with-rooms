@@ -32,14 +32,14 @@ io.on('connection', (socket) => {
 
     let __createedtime__ = Date.now(); // Current timestamp
     // Send message to all users currently in the room, apart form the user that just joined
-    socket.to(room).emit('receive_message', {
+    socket.to(room).emit('recieve_message', {
       message: `${username} has joined the chat room`,
       username: CHAT_BOT,
       __createedtime__,
     });
 
     // Send welcome msg to user that just joined chat only
-    socket.emit('receive_message', {
+    socket.emit('recieve_message', {
       message: `Welcome ${username}`,
       username: CHAT_BOT,
       __createedtime__,
