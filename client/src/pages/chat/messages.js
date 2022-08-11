@@ -2,36 +2,35 @@ import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 
 const Messages = ({ socket }) => {
-  const [messagesRecieved, setMessagesRecieved] = useState([]);
+  const [messagesreceived, setMessagesReceived] = useState([]);
 
-  // Runs whenever a socket event is recieved from the server
+  // Runs whenever a socket event is received from the server
   useEffect(() => {
-    socket.on('recieve_message', (data) => {
+    socket.on('receive_message', (data) => {
       console.log(data);
-      const { message, username, __createdtime__ } = data;
-      setMessagesRecieved((state) => [
+      setMessagesReceived((state) => [
         ...state,
         {
-          message,
-          username,
-          __createdtime__,
+          message: data.message,
+          username: data.username,
+          __createdtime__: data.__createdtime__,
         },
       ]);
     });
 
-    // Remove event listerer on component unmount
-    return () => socket.off('recieve_message');
-  }, [socket])
+	// Remove event listener on component unmount
+    return () => socket.off('receive_message');
+  }, [socket]);
 
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp) {
     const date = new Date(timestamp);
-    return date.toLocalString();
+    return date.toLocaleString();
   }
 
   return (
     <div className={styles.messagesColumn}>
-      {messagesRecieved.map((msg, i) => (
+      {messagesreceived.map((msg, i) => (
         <div className={styles.message} key={i}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span className={styles.msgMeta}>{msg.username}</span>

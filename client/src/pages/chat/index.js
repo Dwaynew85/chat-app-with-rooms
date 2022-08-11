@@ -1,11 +1,11 @@
 import styles from './styles.module.css';
-import MessagesRecieved from './messages';
+import Messagesreceived from './messages';
 
 const Chat = ({ socket }) => {
   return (
     <div className={styles.chatContainer}>
       <div>
-        <MessagesRecieved socket={socket} />
+        <Messagesreceived socket={socket} />
       </div>
     </div>
   );
